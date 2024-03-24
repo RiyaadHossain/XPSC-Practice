@@ -1,71 +1,56 @@
 #include <bits/stdc++.h>
 using namespace std;
 
+int n;
+vector<int> arr;
+bool check(int idx)
+{
+    int i = 0, j = n - 1;
+    while (i < j)
+    {
+        while (arr[i] == arr[idx])
+            i++;
+        while (arr[j] == arr[idx])
+            j--;
+
+        if (arr[i] != arr[j])
+            return 0;
+        i++, j--;
+    }
+
+    return 1;
+}
+
 void solve()
 {
-    int n;
     cin >> n;
+    arr.resize(n);
 
-    int arr[n];
     for (int i = 0; i < n; i++)
         cin >> arr[i];
 
-    int firstIdx = -1;
+    int idx = -1;
     for (int i = 0; i < n / 2; i++)
     {
         if (arr[i] != arr[n - i - 1])
         {
-            firstIdx = i;
+            idx = i;
             break;
         }
     }
 
-    if (firstIdx == -1)
-    {
-        cout << "YES";
-        return;
-    }
+    bool ans = 0;
+    if (idx == -1)
+        ans = 1;
 
-    int i = 0, j = n - 1;
-    bool isFail = 0;
-    while (i < j)
-    {
-        while (arr[i] == arr[firstIdx])
-            i++;
-        while (arr[j] == arr[firstIdx])
-            j--;
+    if (check(idx))
+        ans = 1;
 
-        if (arr[i] != arr[j])
-        {
-            isFail = 1;
-            break;
-        }
-        i++, j--;
-    }
+    idx = n - idx - 1;
+    if (check(idx))
+        ans = 1;
 
-    if (!isFail)
-    {
-        cout << "YES";
-        return;
-    }
-
-    firstIdx = n - firstIdx - 1, i = 0, j = n - 1;
-    while (i < j)
-    {
-        while (arr[i] == arr[firstIdx])
-            i++;
-        while (arr[j] == arr[firstIdx])
-            j--;
-
-        if (arr[i] != arr[j])
-        {
-            cout << "NO";
-            return;
-        }
-        i++, j--;
-    }
-
-    cout << "YES";
+    cout << (ans ? "YES" : "NO");
 }
 
 int main()
