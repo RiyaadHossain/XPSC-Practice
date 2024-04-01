@@ -18,7 +18,7 @@ typedef pair<ll, ll> pll;
 
 int maxFriend(int n, priority_queue<pii> a, priority_queue<pii> b, priority_queue<pii> c)
 {
-    bool day[n] = {0};
+    vector<bool> day(n, 0);
 
     int total = a.top().first;
     day[a.top().second] = 1;
@@ -71,8 +71,8 @@ void solve()
     ans = max(ans, maxFriend(n, ski, game, movie));
     ans = max(ans, maxFriend(n, game, ski, movie));
     ans = max(ans, maxFriend(n, game, movie, ski));
-    ans = max(ans, maxFriend(n, ski, movie, game));
-    ans = max(ans, maxFriend(n, ski, game, movie));
+    ans = max(ans, maxFriend(n, movie, ski, game));
+    ans = max(ans, maxFriend(n, movie, game, ski));
 
     cout << ans;
 }
