@@ -20,27 +20,22 @@ void solve()
     int n;
     cin >> n;
 
-    int len = (n * (n - 1)) / 2;
-    int last = 0;
-    int arr[len];
-    map<int, int> mpp;
-    for (int i = 0; i < len; i++)
-        cin >> arr[i], mpp[arr[i]]++, last = max(last, arr[i]);
-
-    vector<int> ans;
-    while (!mpp.empty())
+    int arr[n];
+    int neg = 0, pos = 0, zero = 0;
+    for (int i = 0; i < n; i++)
     {
-        len = n - 1 - ans.size();
-
-        auto it = mpp.begin();
-        ans.push_back(it->first), it->second -= len;
-        if (it->second <= 0)
-            mpp.erase(it);
+        cin >> arr[i];
+        zero += arr[i] == 0;
+        neg += arr[i] < 0;
     }
-    ans.push_back(last);
 
-    for (int it : ans)
-        cout << it << " ";
+    if (zero || (neg & 1))
+        cout << 0;
+    else
+    {
+        cout << 1 << endl;
+        cout << 1 << " " << 0;
+    }
 }
 
 int32_t main()

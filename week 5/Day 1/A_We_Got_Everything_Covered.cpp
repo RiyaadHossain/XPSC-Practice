@@ -2,12 +2,10 @@
 using namespace std;
 
 #define endl '\n'
-#define fastio                        \
-    ios_base::sync_with_stdio(false); \
-    cin.tie(NULL);
+#define fastio ios_base::sync_with_stdio(false); cin.tie(NULL);
 #define ye "YES"
 #define no "NO"
-#define int long long
+
 
 // Data Type
 typedef long long ll;
@@ -21,25 +19,15 @@ void solve()
     int n, k;
     cin >> n >> k;
 
-    int arr[k];
-    for (int i = 0; i < k; i++)
-        cin >> arr[i];
-
-    sort(arr, arr + k);
-
-    int ans = k, cat = 0;
-    for (int i = k - 1; i >= 0; i--)
+    string str;
+    while (n--)
     {
-        if (cat < arr[i])
-            cat += (n - arr[i]);
-        else
-        {
-            ans = k - 1 - i;
-            break;
-        }
+        for (int i = 0; i < k; i++)
+            str += char('a' + i);
+        
     }
 
-    cout << ans;
+    cout << str;
 }
 
 int32_t main()

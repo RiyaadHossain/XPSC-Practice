@@ -20,27 +20,18 @@ void solve()
     int n;
     cin >> n;
 
-    int len = (n * (n - 1)) / 2;
-    int last = 0;
-    int arr[len];
-    map<int, int> mpp;
-    for (int i = 0; i < len; i++)
-        cin >> arr[i], mpp[arr[i]]++, last = max(last, arr[i]);
+    string str;
+    cin >> str;
 
-    vector<int> ans;
-    while (!mpp.empty())
+    vector<int> freq(26);
+    ll ans = 0;
+    for (int i = 0; i < n; i++)
     {
-        len = n - 1 - ans.size();
-
-        auto it = mpp.begin();
-        ans.push_back(it->first), it->second -= len;
-        if (it->second <= 0)
-            mpp.erase(it);
+        if (freq[str[i] - 'a'] == 0)
+            ans += (n - i), freq[str[i] - 'a'] = 1;
     }
-    ans.push_back(last);
 
-    for (int it : ans)
-        cout << it << " ";
+    cout << ans;
 }
 
 int32_t main()

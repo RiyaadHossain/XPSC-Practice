@@ -18,36 +18,21 @@ typedef pair<ll, ll> pll;
 
 void solve()
 {
-    int n, t;
-    cin >> n >> t;
+    int n;
+    cin >> n;
 
     int arr[n];
     for (int i = 0; i < n; i++)
         cin >> arr[i];
 
-    auto ok = [&](int mid)
+    int rem = 0, ans = 0;
+    for (int i = 0; i < n; i++)
     {
-        int total = 0;
-        for (int i = 0; i < n; i++)
-        {
-            total += (mid / arr[i]);
-            if (total >= t)
-                return 1;
-        }
-
-        return 0;
-    };
-
-    int ans = 0;
-    int left = 0, right = 1e18, mid, totalPod;
-    while (left <= right)
-    {
-        mid = (left + right) / 2;
-
-        if (ok(mid))
-            ans = mid, right = mid - 1;
+        if (arr[i] > 0)
+            rem += arr[i];
         else
-            left = mid + 1;
+            arr[i] = abs(arr[i]), ans += (arr[i] - min(rem, arr[i])), rem -= min(rem, arr[i]);
+        
     }
 
     cout << ans;
@@ -57,8 +42,14 @@ int32_t main()
 {
     fastio;
 
-    solve();
-    cout << '\n';
+    int t;
+    cin >> t;
+
+    while (t--)
+    {
+        solve();
+        cout << '\n';
+    }
 
     return 0;
 }

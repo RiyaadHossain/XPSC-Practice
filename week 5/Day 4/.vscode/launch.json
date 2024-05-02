@@ -8,8 +8,8 @@
       "args": [],
       "stopAtEntry": false,
       "externalConsole": false,
-      "cwd": "/home/riyad/Documents/Phitron/XPSC/Practice Problem/week 6/class",
-      "program": "/home/riyad/Documents/Phitron/XPSC/Practice Problem/week 6/class/build/Debug/outDebug",
+      "cwd": "/home/riyad/Documents/Phitron/XPSC/Practice Problem/week 5/Day 4",
+      "program": "/home/riyad/Documents/Phitron/XPSC/Practice Problem/week 5/Day 4/build/Debug/outDebug",
       "MIMode": "gdb",
       "miDebuggerPath": "gdb",
       "setupCommands": [
