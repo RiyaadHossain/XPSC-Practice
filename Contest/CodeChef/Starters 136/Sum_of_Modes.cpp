@@ -1,5 +1,12 @@
 #include <bits/stdc++.h>
+#include <ext/pb_ds/assoc_container.hpp>
+#include <ext/pb_ds/tree_policy.hpp>
+
+using namespace __gnu_pbds;
 using namespace std;
+
+template <typename T>
+using pbds = tree<T, null_type, less<T>, rb_tree_tag, tree_order_statistics_node_update>;
 
 #define endl '\n'
 #define ye cout << "YES"
@@ -27,33 +34,27 @@ void solve()
 {
     int n;
     cin >> n;
+    string s;
+    cin >> s;
 
-    set<pii> st;
+    int ans = (n * (n + 1)) / 2;
+
     vector<int> arr(n);
     for (int i = 0; i < n; i++)
-        cin >> arr[i], st.insert({arr[i], i});
+        arr[i] = s[i] == '0' ? -1 : 1;
 
-    int ans = 0, i = 0;
-    while (i < n)
+    map<int, int> mpp;
+    mpp[0] = 1;
+
+    int cnt = 0, sum = 0;
+    for (int i = 0; i < n; i++)
     {
-        st.erase({arr[i], i});
-        if (st.empty())
-            break;
-
-        int next = (*(--st.end())).a;
-        if (arr[i] > next)
-        {
-            ans += arr[i++];
-            continue;
-        }
-
-        int it = (*st.begin()).b;
-        ans += ((it - i) * max(arr[i], arr[it]));
-        while (it != i)
-            st.erase({arr[i], i}), i++;
+        sum += arr[i];
+        cnt += mpp[sum - 0];
+        mpp[sum]++;
     }
 
-    cout << ans;
+    cout << ans + cnt;
 }
 
 int32_t main()

@@ -1,5 +1,12 @@
 #include <bits/stdc++.h>
+#include <ext/pb_ds/assoc_container.hpp>
+#include <ext/pb_ds/tree_policy.hpp>
+
+using namespace __gnu_pbds;
 using namespace std;
+
+template <typename T>
+using pbds = tree<T, null_type, less<T>, rb_tree_tag, tree_order_statistics_node_update>;
 
 #define endl '\n'
 #define ye cout << "YES"
@@ -28,32 +35,24 @@ void solve()
     int n;
     cin >> n;
 
-    set<pii> st;
-    vector<int> arr(n);
+    string s;
+    cin >> s;
+
+    bool found = 0;
     for (int i = 0; i < n; i++)
-        cin >> arr[i], st.insert({arr[i], i});
-
-    int ans = 0, i = 0;
-    while (i < n)
     {
-        st.erase({arr[i], i});
-        if (st.empty())
-            break;
-
-        int next = (*(--st.end())).a;
-        if (arr[i] > next)
+        found |= (s[i] >= 'a' && s[i] <= 'z');
+        if (found && s[i] >= '0' && s[i] <= '9')
         {
-            ans += arr[i++];
-            continue;
+            no;
+            return;
         }
-
-        int it = (*st.begin()).b;
-        ans += ((it - i) * max(arr[i], arr[it]));
-        while (it != i)
-            st.erase({arr[i], i}), i++;
     }
 
-    cout << ans;
+    string tmp = s;
+    sort(all(tmp));
+
+    (s == tmp ? ye : no);
 }
 
 int32_t main()

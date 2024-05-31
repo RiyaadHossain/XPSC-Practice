@@ -1,5 +1,12 @@
 #include <bits/stdc++.h>
+#include <ext/pb_ds/assoc_container.hpp>
+#include <ext/pb_ds/tree_policy.hpp>
+
+using namespace __gnu_pbds;
 using namespace std;
+
+template <typename T>
+using pbds = tree<T, null_type, less<T>, rb_tree_tag, tree_order_statistics_node_update>;
 
 #define endl '\n'
 #define ye cout << "YES"
@@ -25,35 +32,36 @@ const int llinf = 1e18;
 
 void solve()
 {
-    int n;
-    cin >> n;
+    int n, k;
+    cin >> n >> k;
 
-    set<pii> st;
-    vector<int> arr(n);
-    for (int i = 0; i < n; i++)
-        cin >> arr[i], st.insert({arr[i], i});
+    string s;
+    cin >> s;
 
-    int ans = 0, i = 0;
-    while (i < n)
+    int cnt = count(all(s), 'B');
+
+    if (cnt == k)
     {
-        st.erase({arr[i], i});
-        if (st.empty())
-            break;
-
-        int next = (*(--st.end())).a;
-        if (arr[i] > next)
-        {
-            ans += arr[i++];
-            continue;
-        }
-
-        int it = (*st.begin()).b;
-        ans += ((it - i) * max(arr[i], arr[it]));
-        while (it != i)
-            st.erase({arr[i], i}), i++;
+        cout << 0;
+        return;
     }
 
-    cout << ans;
+    cout << 1 << endl;
+
+    int x = k - cnt;
+    char ch = 'B';
+    if (cnt > k)
+        x = cnt - k, ch = 'A';
+
+    for (int i = 0; i < n; i++)
+    {
+        x -= (s[i] != ch);
+        if (x == 0)
+        {
+            cout << i + 1 << " " << ch;
+            break;
+        }
+    }
 }
 
 int32_t main()

@@ -1,5 +1,12 @@
 #include <bits/stdc++.h>
+#include <ext/pb_ds/assoc_container.hpp>
+#include <ext/pb_ds/tree_policy.hpp>
+
+using namespace __gnu_pbds;
 using namespace std;
+
+template <typename T>
+using pbds = tree<T, null_type, less<T>, rb_tree_tag, tree_order_statistics_node_update>;
 
 #define endl '\n'
 #define ye cout << "YES"
@@ -25,35 +32,33 @@ const int llinf = 1e18;
 
 void solve()
 {
-    int n;
-    cin >> n;
+    int x;
+    cin >> x;
 
-    set<pii> st;
-    vector<int> arr(n);
-    for (int i = 0; i < n; i++)
-        cin >> arr[i], st.insert({arr[i], i});
+    vector<int> bit(32);
+    for (int i = 0; i < 32; i++)
+        bit[i] = (x & (1 << i)) > 0;
 
-    int ans = 0, i = 0;
-    while (i < n)
+    for (int i = 0, j; i < 32;)
     {
-        st.erase({arr[i], i});
-        if (st.empty())
-            break;
-
-        int next = (*(--st.end())).a;
-        if (arr[i] > next)
+        if (!bit[i])
         {
-            ans += arr[i++];
+            i++;
             continue;
         }
 
-        int it = (*st.begin()).b;
-        ans += ((it - i) * max(arr[i], arr[it]));
-        while (it != i)
-            st.erase({arr[i], i}), i++;
+        j = i + 1;
+        while (bit[j])
+            bit[j++] = 0;
+
+        if (j > i + 1)
+            bit[i] = -1, bit[j] = 1;
+        i = j;
     }
 
-    cout << ans;
+    cout << 32 << endl;
+    for (int it : bit)
+        cout << it << " ";
 }
 
 int32_t main()

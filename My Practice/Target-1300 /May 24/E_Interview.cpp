@@ -39,28 +39,28 @@ void solve()
 
     auto ok = [&](int left, int mid)
     {
-        cout << "? " << mid - left + 1 << " ";
+        cout << "? " << mid + 1 - left << " ";
         for (int i = left; i <= mid; i++)
-            cout << arr[i] << " ";
+            cout << i + 1 << " ";
         cout << endl;
 
         int x;
         cin >> x;
         int sum = prefix[mid] - (left == 0 ? 0 : prefix[left - 1]);
 
-        return sum == x;
+        return sum + 1 == x;
     };
 
     int ans = 0;
-    int left = 0, right = n, mid;
+    int left = 0, right = n - 1, mid;
     while (left < right)
     {
         mid = (left + right) / 2;
 
         if (ok(left, mid))
-            ans = mid, left = mid + 1;
+            right = mid;
         else
-            right = mid - 1;
+            left = mid + 1;
     }
 
     cout << "! " << left + 1;

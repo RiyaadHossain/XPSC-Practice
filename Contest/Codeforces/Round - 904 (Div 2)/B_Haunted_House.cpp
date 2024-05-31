@@ -1,5 +1,12 @@
 #include <bits/stdc++.h>
+#include <ext/pb_ds/assoc_container.hpp>
+#include <ext/pb_ds/tree_policy.hpp>
+
+using namespace __gnu_pbds;
 using namespace std;
+
+template <typename T>
+using pbds = tree<T, null_type, less<T>, rb_tree_tag, tree_order_statistics_node_update>;
 
 #define endl '\n'
 #define ye cout << "YES"
@@ -28,32 +35,31 @@ void solve()
     int n;
     cin >> n;
 
-    set<pii> st;
-    vector<int> arr(n);
+    string s;
+    cin >> s;
+
+    stack<int> st;
+    int cnt = count(all(s), '0');
     for (int i = 0; i < n; i++)
-        cin >> arr[i], st.insert({arr[i], i});
+        if (s[i] == '0')
+            st.push(i);
 
-    int ans = 0, i = 0;
-    while (i < n)
+    vector<int> ans(n);
+    for (int i = 0; i < n; i++)
     {
-        st.erase({arr[i], i});
-        if (st.empty())
-            break;
-
-        int next = (*(--st.end())).a;
-        if (arr[i] > next)
+        if (cnt < i + 1)
         {
-            ans += arr[i++];
+            ans[i] = -1;
             continue;
         }
 
-        int it = (*st.begin()).b;
-        ans += ((it - i) * max(arr[i], arr[it]));
-        while (it != i)
-            st.erase({arr[i], i}), i++;
+        int last = st.top();
+        st.pop();
+        ans[i] = ((n - 1 - i) - last) + (i > 0 ? ans[i - 1] : 0);
     }
 
-    cout << ans;
+    for (int it : ans)
+        cout << it << " ";
 }
 
 int32_t main()

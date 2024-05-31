@@ -28,29 +28,24 @@ void solve()
     int a, b, k;
     cin >> a >> b >> k;
 
-    int tmp = a, result = 0;
+    int ans = 0;
     while (1)
     {
-        if (tmp * k < b)
-            tmp *= k, result++;
+        if (b % k == 0 && b / k >= a)
+            b /= k, ans++;
+        else if (b / k >= a)
+        {
+            int x = b - (b / k) * k;
+            ans += x, b -= x;
+        }
         else
+        {
+            ans += (b - a);
             break;
-    }
-    result += (b - tmp);
-
-    tmp = (b / k) * k;
-    int ans = b - tmp;
-
-    while (1)
-    {
-        if (tmp % k == 0 && tmp / k >= a)
-            tmp /= k, ans++;
-        else
-            break;
+        }
     }
 
-    ans += (tmp - a);
-    cout << min(result, ans);
+    cout << ans;
 }
 
 int32_t main()
