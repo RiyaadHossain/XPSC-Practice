@@ -8,7 +8,7 @@ using namespace std;
 template <typename T>
 using pbds = tree<T, null_type, less<T>, rb_tree_tag, tree_order_statistics_node_update>;
 
-// #define endl '\n'
+#define endl '\n'
 #define ye cout << "YES"
 #define no cout << "NO"
 #define int long long
@@ -32,41 +32,38 @@ typedef pair<int, int> pii;
 const int mod = 1e9 + 7;
 const int inf = 1e9;
 const int llinf = 1e18;
+const int N = 2e5 + 1;
 
 void solve()
 {
-    int n, m, k;
-    cin >> n >> m >> k;
+    int n, h;
+    cin >> h >> n;
 
-    vector<int> a(n);
+    vector<int> a(n), b(n);
     for (int i = 0; i < n; i++)
         cin >> a[i];
+    for (int i = 0; i < n; i++)
+        cin >> b[i];
 
-    int x;
-    multiset<int> ms;
-    for (int i = 0; i < m; i++)
-        cin >> x, ms.insert(x);
-
-    int cnt = 0;
-    map<int, int> mpp;
-    for (int i = 0; i < m; i++)
+    auto ok = [&](int turn) -> bool
     {
-        mpp[a[i]]++;
-        if (ms.count(a[i]) && ms.count(a[i]) >= mpp[a[i]])
-            cnt++;
-    }
+        int damage = 0;
+        for (int i = 0; i < n && damage < h; i++)
+            damage += (((turn - 1) / b[i] + 1) * a[i]);
 
-    int ans = cnt >= k;
-    for (int i = 0; i < n - m; i++)
+        return h <= damage;
+    };
+
+    int ans = 1;
+    int left = 1, right = 1e12, mid;
+    while (left <= right)
     {
-        mpp[a[i]]--;
-        if (ms.count(a[i]) > mpp[a[i]])
-            cnt--;
+        mid = (left + right) / 2;
 
-        mpp[a[i + m]]++;
-        if (ms.count(a[i + m]) && ms.count(a[i + m]) >= mpp[a[i + m]])
-            cnt++;
-        ans += cnt >= k;
+        if (ok(mid))
+            ans = mid, right = mid - 1;
+        else
+            left = mid + 1;
     }
 
     print(ans);

@@ -8,9 +8,9 @@ using namespace std;
 template <typename T>
 using pbds = tree<T, null_type, less<T>, rb_tree_tag, tree_order_statistics_node_update>;
 
-// #define endl '\n'
-#define ye cout << "YES"
-#define no cout << "NO"
+#define endl '\n'
+#define ye cout << "YES \n"
+#define no cout << "NO \n"
 #define int long long
 #define print(...) cout << (__VA_ARGS__)
 #define println(...) cout << (__VA_ARGS__) << '\n'
@@ -35,41 +35,34 @@ const int llinf = 1e18;
 
 void solve()
 {
-    int n, m, k;
-    cin >> n >> m >> k;
-
-    vector<int> a(n);
-    for (int i = 0; i < n; i++)
-        cin >> a[i];
-
     int x;
-    multiset<int> ms;
-    for (int i = 0; i < m; i++)
-        cin >> x, ms.insert(x);
+    cin >> x;
 
-    int cnt = 0;
-    map<int, int> mpp;
-    for (int i = 0; i < m; i++)
+    string s1, s2, s3;
+    s1 = to_string(x);
+    int large = 0, mul = 1;
+    for (int i = 1; i < sz(s1); i++)
+        large += (9 * mul), mul *= 10;
+
+    int small = x - large;
+    s2 = to_string(large), s3 = to_string(small);
+
+    for (int i = 0; i < sz(s2); i++)
     {
-        mpp[a[i]]++;
-        if (ms.count(a[i]) && ms.count(a[i]) >= mpp[a[i]])
-            cnt++;
+        if (s3[i] < '5')
+            s2[i] -= ('5' - s3[i]);
     }
 
-    int ans = cnt >= k;
-    for (int i = 0; i < n - m; i++)
+    for (int i = 0; i < sz(s2); i++)
     {
-        mpp[a[i]]--;
-        if (ms.count(a[i]) > mpp[a[i]])
-            cnt--;
-
-        mpp[a[i + m]]++;
-        if (ms.count(a[i + m]) && ms.count(a[i + m]) >= mpp[a[i + m]])
-            cnt++;
-        ans += cnt >= k;
+        if (s2[i] < '5')
+        {
+            no;
+            return;
+        }
     }
 
-    print(ans);
+    (sz(s2) == sz(s3)) ? ye : no;
 }
 
 int32_t main()
@@ -83,7 +76,7 @@ int32_t main()
     while (t--)
     {
         solve();
-        cout << '\n';
+        // cout << '\n';
     }
 
     return 0;

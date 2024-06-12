@@ -8,7 +8,7 @@ using namespace std;
 template <typename T>
 using pbds = tree<T, null_type, less<T>, rb_tree_tag, tree_order_statistics_node_update>;
 
-// #define endl '\n'
+#define endl '\n'
 #define ye cout << "YES"
 #define no cout << "NO"
 #define int long long
@@ -35,41 +35,38 @@ const int llinf = 1e18;
 
 void solve()
 {
-    int n, m, k;
-    cin >> n >> m >> k;
+    int n;
+    cin >> n;
 
-    vector<int> a(n);
-    for (int i = 0; i < n; i++)
-        cin >> a[i];
-
-    int x;
-    multiset<int> ms;
-    for (int i = 0; i < m; i++)
-        cin >> x, ms.insert(x);
-
-    int cnt = 0;
     map<int, int> mpp;
-    for (int i = 0; i < m; i++)
+    vector<int> arr(n);
+    for (int i = 0; i < n; i++)
+        cin >> arr[i], mpp[arr[i]]++;
+
+    if (arr[0] == arr[n - 1])
     {
-        mpp[a[i]]++;
-        if (ms.count(a[i]) && ms.count(a[i]) >= mpp[a[i]])
-            cnt++;
+        no;
+        return;
     }
 
-    int ans = cnt >= k;
-    for (int i = 0; i < n - m; i++)
-    {
-        mpp[a[i]]--;
-        if (ms.count(a[i]) > mpp[a[i]])
-            cnt--;
+    ye;
+    cout << endl;
+    bool done = 1;
+    int idx = 0;
 
-        mpp[a[i + m]]++;
-        if (ms.count(a[i + m]) && ms.count(a[i + m]) >= mpp[a[i + m]])
-            cnt++;
-        ans += cnt >= k;
+    if (sz(mpp) == n)
+    {
+        print('R');
+        idx = 1;
     }
 
-    print(ans);
+    for (int i = idx; i < n; i++)
+    {
+        if (mpp[arr[i]] > 1 && done)
+            print('R'), done = 0;
+        else
+            print('B');
+    }
 }
 
 int32_t main()

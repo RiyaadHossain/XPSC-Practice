@@ -8,7 +8,7 @@ using namespace std;
 template <typename T>
 using pbds = tree<T, null_type, less<T>, rb_tree_tag, tree_order_statistics_node_update>;
 
-// #define endl '\n'
+#define endl '\n'
 #define ye cout << "YES"
 #define no cout << "NO"
 #define int long long
@@ -33,43 +33,54 @@ const int mod = 1e9 + 7;
 const int inf = 1e9;
 const int llinf = 1e18;
 
+bool powermod(int x, int y, int p)
+{
+    int res = 1;
+    x = x % p;
+    if (x == 0)
+        return 0;
+    while (y > 0)
+    {
+        if (y & 1)
+            res = (res * x) % p;
+        y = y >> 1;
+        x = (x * x) % p;
+    }
+    return res;
+}
+
 void solve()
 {
-    int n, m, k;
-    cin >> n >> m >> k;
+    int n, m;
+    cin >> n >> m;
 
-    vector<int> a(n);
+    int product = 1;
+    vector<int> arr(n);
     for (int i = 0; i < n; i++)
-        cin >> a[i];
+        cin >> arr[i], product *= arr[i];
 
-    int x;
-    multiset<int> ms;
-    for (int i = 0; i < m; i++)
-        cin >> x, ms.insert(x);
+    string s;
+    cin >> s;
 
-    int cnt = 0;
-    map<int, int> mpp;
-    for (int i = 0; i < m; i++)
+    int left = 0, right = n - 1;
+    vector<int> idx(n);
+    for (int i = 0; i < n; i++)
     {
-        mpp[a[i]]++;
-        if (ms.count(a[i]) && ms.count(a[i]) >= mpp[a[i]])
-            cnt++;
+        if (s[i] == 'L')
+            idx[i] = left++;
+        else
+            idx[i] = right--;
     }
 
-    int ans = cnt >= k;
-    for (int i = 0; i < n - m; i++)
-    {
-        mpp[a[i]]--;
-        if (ms.count(a[i]) > mpp[a[i]])
-            cnt--;
+    reverse(all(s)), reverse(all(idx));
 
-        mpp[a[i + m]]++;
-        if (ms.count(a[i + m]) && ms.count(a[i + m]) >= mpp[a[i + m]])
-            cnt++;
-        ans += cnt >= k;
-    }
+    vector<int> ans(n);
+    for (int i = 0; i < n; i++)
+        ans[i] = (arr[idx[i]] * (i > 0 ? ans[i - 1] : 1)) % m;
 
-    print(ans);
+    reverse(all(ans));
+    for (auto it : ans)
+        cout << it << " ";
 }
 
 int32_t main()
