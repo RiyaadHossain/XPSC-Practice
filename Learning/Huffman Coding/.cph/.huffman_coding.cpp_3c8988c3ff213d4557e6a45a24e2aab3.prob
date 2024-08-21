@@ -1,0 +1,1 @@
+{"name":"Local: huffman_coding","url":"/home/riyad/Documents/Phitron/XPSC/Learning/Huffman Coding/huffman_coding.cpp","tests":[{"id":1722083823080,"input":"1\n6\na 1\nb 1\nc 3\nd 4\ne 4\nf 7","output":""}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"/home/riyad/Documents/Phitron/XPSC/Learning/Huffman Coding/huffman_coding.cpp","group":"local","local":true}

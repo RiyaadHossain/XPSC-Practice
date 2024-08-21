@@ -63,25 +63,14 @@ void solve()
 
     vi remove;
     stack<int> st;
-    forr(i, 0, n - 2)
+    st.push(0);
+    forr(i, 1, n - 1)
     {
-        if (s[i] > s[i + 1])
-        {
-            remove.pb(i);
-            while (!st.empty())
-            {
-                int idx = st.top();
-                if (s[idx] > s[i + 1])
-                    remove.pb(idx), st.pop();
-                else
-                    break;
-            }
-        }
-        else
-            st.push(i);
+        while (!st.empty() && s[i] < s[st.top()])
+            remove.pb(st.top()), st.pop();
+        st.push(i);
     }
 
-    st.push(n - 1);
     while (!st.empty())
         remove.pb(st.top()), st.pop();
 

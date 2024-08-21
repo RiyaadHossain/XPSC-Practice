@@ -48,34 +48,28 @@ void solve()
     int n, k;
     cin >> n >> k;
 
-    int inc = 0;
-    forr(i, 1, n)
+    int eaten;
+    auto ok = [&](int m) -> bool
     {
-        if ((i * (i + 1)) / 2 >= k)
-        {
-            inc = i;
-            break;
-        }
-    }
+        int candy = (m * (m + 1)) / 2;
+        eaten = m - n;
+        candy -= eaten;
+        return candy >= k;
+    };
 
-    n -= inc;
-    int candy = (inc * (inc + 1)) / 2;
-    int eat = 0;
-    while (n > 0)
+    int ans = 0;
+    int left = 0, right = n, mid;
+    while (left <= right)
     {
-        if (candy == k)
-        {
-            candy += ++inc;
-            n--;
-        }
+        mid = left + (right - left) / 2;
+
+        if (ok(mid))
+            ans = eaten, left = mid + 1;
         else
-        {
-            int x = min(n, candy - k);
-            candy -= x, eat += x, n -= x;
-        }
+            right = mid - 1;
     }
 
-    print(eat);
+    print(ans);
 }
 
 int32_t main()

@@ -64,14 +64,13 @@ void solve()
     bool carry = 0;
     rforr(i, n - 1, 0)
     {
-        int curr;
-        if (s[i] != '0')
-            curr = 11 - (s[i] - '0') - carry, carry = 1;
-        else if (carry)
-            curr = 0, carry = 0;
+        int curr = (s[i]-'0')+carry;
+        if (curr >= 2)
+            result[i] = 11 - curr, carry = 1;
+        else if(curr==1)
+            result[i] = 0, carry = 0;
         else
-            curr = 1;
-        result[i] = curr;
+            result[i] = 1;
     }
 
     forr(i, 0, n - 1)

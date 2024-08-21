@@ -1,0 +1,1 @@
+{"name":"Local: debug","url":"/home/riyad/Documents/Phitron/XPSC/Learning/Segment Tree/debug.cpp","tests":[{"id":1721797517715,"input":"7\n6 7 5 4 2 3 8\n3\n1 3 5 4\n1 3 7 3\n1 1 4 2","output":""}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"/home/riyad/Documents/Phitron/XPSC/Learning/Segment Tree/debug.cpp","group":"local","local":true}
